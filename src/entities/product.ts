@@ -3,6 +3,7 @@ export interface Product {
   code: string;
   name: string;
   price: number;
+  isActive: boolean;
   description?: string;
   createdAt: Date;
   updatedAt: Date;
