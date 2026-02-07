@@ -80,11 +80,11 @@ function RootComponent() {
         </SidebarContent>
       </Sidebar>
 
-      <main>
+      <main className="w-screen">
         <SidebarTrigger />
 
         <Outlet />
-        <TanStackRouterDevtools />
+        <TanStackRouterDevtools position="bottom-right" />
       </main>
     </SidebarProvider>
   );
