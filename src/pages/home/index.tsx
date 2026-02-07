@@ -1,5 +1,6 @@
 import { useColumns } from './use-columns';
 import { useListProductsQuery } from '@/hooks/queries/use-list-products-query';
+import { useGetSummaryProductQuery } from '@/hooks/queries/use-get-summary-product-query';
 
 import {
   flexRender,
@@ -24,24 +25,25 @@ import {
 
 export function Home() {
   const { productList } = useListProductsQuery();
+  const { summary } = useGetSummaryProductQuery();
 
   const informations: InformationCardsProps['informations'] = [
     {
       id: 'total-products',
       label: 'Total de Produtos',
-      value: 1000,
+      value: summary.total,
       Icon: PackageIcon,
     },
     {
       id: 'active-products',
       label: 'Produtos Ativos',
-      value: 80,
+      value: summary.active,
       Icon: CheckIcon,
     },
     {
       id: 'inactive-products',
       label: 'Produtos Inativos',
-      value: 20,
+      value: summary.inactive,
       Icon: XIcon,
     },
   ];
