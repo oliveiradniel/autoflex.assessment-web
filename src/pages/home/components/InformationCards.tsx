@@ -1,19 +1,34 @@
-import type { ForwardRefExoticComponent, RefAttributes } from 'react';
-import type { LucideProps } from 'lucide-react';
+import { Spinner } from '@/components/ui/spinner';
+import { useGetSummaryProductQuery } from '@/hooks/queries/use-get-summary-product-query';
+
 import { cn } from '@/lib/utils';
 
-export interface InformationCardsProps {
-  informations: {
-    id: 'total-products' | 'active-products' | 'inactive-products';
-    label: 'Produtos Ativos' | 'Produtos Inativos' | 'Total de Produtos';
-    value: number;
-    Icon: ForwardRefExoticComponent<
-      Omit<LucideProps, 'ref'> & RefAttributes<SVGSVGElement>
-    >;
-  }[];
-}
+import { CheckIcon, PackageIcon, XIcon } from 'lucide-react';
 
-export function InformationCards({ informations }: InformationCardsProps) {
+export function InformationCards() {
+  const { summary, isFetchingSummary } = useGetSummaryProductQuery();
+
+  const informations = [
+    {
+      id: 'total-products',
+      label: 'Total de Produtos',
+      value: summary.total,
+      Icon: PackageIcon,
+    },
+    {
+      id: 'active-products',
+      label: 'Produtos Ativos',
+      value: summary.active,
+      Icon: CheckIcon,
+    },
+    {
+      id: 'inactive-products',
+      label: 'Produtos Inativos',
+      value: summary.inactive,
+      Icon: XIcon,
+    },
+  ];
+
   return (
     <div className="flex flex-wrap gap-2">
       {informations.map(({ id, label, value, Icon }) => (
@@ -24,7 +39,9 @@ export function InformationCards({ informations }: InformationCardsProps) {
           <div className="flex flex-col gap-1">
             <span className="text-sm">{label}</span>
 
-            <strong className="text-base">{value}</strong>
+            <strong className="text-base">
+              {isFetchingSummary ? <Spinner className="text-primary" /> : value}
+            </strong>
           </div>
 
           <div

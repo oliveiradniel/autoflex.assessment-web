@@ -5,7 +5,7 @@ import { makeProductsService } from '@/app/core/factories/make-products-service'
 export function useListProductsQuery() {
   const productsService = makeProductsService();
 
-  const { data } = useQuery({
+  const { data, isFetching } = useQuery({
     queryKey: ['products'],
     queryFn: async () => productsService.list(),
     placeholderData: [],
@@ -13,5 +13,6 @@ export function useListProductsQuery() {
 
   return {
     productList: data ?? [],
+    isFetchingProductList: isFetching,
   };
 }

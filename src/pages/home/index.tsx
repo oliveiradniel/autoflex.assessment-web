@@ -1,6 +1,5 @@
 import { useColumns } from './use-columns';
 import { useListProductsQuery } from '@/hooks/queries/use-list-products-query';
-import { useGetSummaryProductQuery } from '@/hooks/queries/use-get-summary-product-query';
 
 import {
   flexRender,
@@ -8,12 +7,7 @@ import {
   useReactTable,
 } from '@tanstack/react-table';
 
-import { CheckIcon, PackageIcon, XIcon } from 'lucide-react';
-
-import {
-  InformationCards,
-  type InformationCardsProps,
-} from './components/InformationCards';
+import { InformationCards } from './components/InformationCards';
 import {
   Table,
   TableBody,
@@ -22,31 +16,10 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import { DataTableFallback } from '@/components/data-table-fallback';
 
 export function Home() {
-  const { productList } = useListProductsQuery();
-  const { summary } = useGetSummaryProductQuery();
-
-  const informations: InformationCardsProps['informations'] = [
-    {
-      id: 'total-products',
-      label: 'Total de Produtos',
-      value: summary.total,
-      Icon: PackageIcon,
-    },
-    {
-      id: 'active-products',
-      label: 'Produtos Ativos',
-      value: summary.active,
-      Icon: CheckIcon,
-    },
-    {
-      id: 'inactive-products',
-      label: 'Produtos Inativos',
-      value: summary.inactive,
-      Icon: XIcon,
-    },
-  ];
+  const { productList, isFetchingProductList } = useListProductsQuery();
 
   const columns = useColumns();
 
@@ -59,7 +32,7 @@ export function Home() {
   return (
     <div className="p-4">
       <header className="flex flex-col gap-8">
-        <InformationCards informations={informations} />
+        <InformationCards />
 
         <div>
           <h1 className="text-base font-bold">Inventário de Produtos</h1>
@@ -71,35 +44,46 @@ export function Home() {
       </header>
 
       <div className="mt-6 overflow-x-auto">
-        <Table>
-          <TableHeader>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => (
-                  <TableHead key={header.id}>
-                    {!header.isPlaceholder &&
-                      flexRender(
-                        header.column.columnDef.header,
-                        header.getContext(),
-                      )}
-                  </TableHead>
-                ))}
-              </TableRow>
-            ))}
-          </TableHeader>
+        {isFetchingProductList && (
+          <DataTableFallback
+            fallbackColumns={columns.map((col) => col.header?.toString() ?? '')}
+          />
+        )}
 
-          <TableBody>
-            {table.getRowModel().rows.map((row) => (
-              <TableRow key={row.id}>
-                {row.getVisibleCells().map((cell) => (
-                  <TableCell key={cell.id}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </TableCell>
-                ))}
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+        {!isFetchingProductList && (
+          <Table>
+            <TableHeader>
+              {table.getHeaderGroups().map((headerGroup) => (
+                <TableRow key={headerGroup.id}>
+                  {headerGroup.headers.map((header) => (
+                    <TableHead key={header.id}>
+                      {!header.isPlaceholder &&
+                        flexRender(
+                          header.column.columnDef.header,
+                          header.getContext(),
+                        )}
+                    </TableHead>
+                  ))}
+                </TableRow>
+              ))}
+            </TableHeader>
+
+            <TableBody>
+              {table.getRowModel().rows.map((row) => (
+                <TableRow key={row.id}>
+                  {row.getVisibleCells().map((cell) => (
+                    <TableCell key={cell.id}>
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext(),
+                      )}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        )}
       </div>
     </div>
   );

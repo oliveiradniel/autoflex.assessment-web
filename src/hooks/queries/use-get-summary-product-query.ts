@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 export function useGetSummaryProductQuery() {
   const productsService = makeProductsService();
 
-  const { data } = useQuery({
+  const { data, isFetching } = useQuery({
     queryKey: ['summary-product'],
     queryFn: async () => productsService.getSummary(),
   });
@@ -15,5 +15,6 @@ export function useGetSummaryProductQuery() {
       active: 0,
       inactive: 0,
     },
+    isFetchingSummary: isFetching,
   };
 }
