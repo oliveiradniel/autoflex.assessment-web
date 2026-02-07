@@ -19,7 +19,7 @@ export function InformationCards({ informations }: InformationCardsProps) {
       {informations.map(({ id, label, value, Icon }) => (
         <div
           key={id}
-          className="flex w-full items-center justify-between rounded-md p-4 shadow-md md:max-w-75"
+          className="flex w-full items-center justify-between rounded-md p-4 shadow-md sm:max-w-75"
         >
           <div className="flex flex-col gap-1">
             <span className="text-sm">{label}</span>

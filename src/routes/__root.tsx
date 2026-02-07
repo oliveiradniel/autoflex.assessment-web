@@ -80,7 +80,7 @@ function RootComponent() {
         </SidebarContent>
       </Sidebar>
 
-      <main className="w-screen">
+      <main className="w-screen overflow-x-hidden">
         <SidebarTrigger />
 
         <Outlet />
