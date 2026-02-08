@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
-import { useDeleteProductMutation } from '@/hooks/mutations/use-delete-product-mutation';
+import { useDeleteRawMaterialMutation } from '@/hooks/mutations/use-delete-raw-material-mutation';
 
 import { Trash2Icon } from 'lucide-react';
 
@@ -17,29 +17,31 @@ import {
 } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
-import type { Product } from '@/entities/product';
 
-interface DeleteProductAlertDialog {
+import type { RawMaterial } from '@/entities/raw-material';
+
+interface DeleteRawMaterialAlertDialog {
   id: string;
   name: string;
 }
 
-export function DeleteProductAlertDialog({
+export function DeleteRawMaterialAlertDialog({
   id,
   name,
-}: DeleteProductAlertDialog) {
+}: DeleteRawMaterialAlertDialog) {
   const queryClient = useQueryClient();
 
-  const { deleteProduct, isDeletingProduct } = useDeleteProductMutation();
+  const { deleteRawMaterial, isDeletingRawMaterial } =
+    useDeleteRawMaterialMutation();
 
   const [isDeleteAlertDialogOpen, setIsDeleteAlertDialogOpen] = useState(false);
 
   async function handleDeleteProduct() {
-    await deleteProduct(id);
+    await deleteRawMaterial(id);
 
-    queryClient.setQueryData<Product[]>(
-      ['products'],
-      (old) => old?.filter((product) => product.id !== id) ?? [],
+    queryClient.setQueryData<RawMaterial[]>(
+      ['raw-materials'],
+      (old) => old?.filter((rawMaterial) => rawMaterial.id !== id) ?? [],
     );
 
     queryClient.invalidateQueries({ queryKey: ['summary-product'] });
@@ -67,7 +69,7 @@ export function DeleteProductAlertDialog({
           <AlertDialogTitle>Esta ação é irreversível</AlertDialogTitle>
 
           <AlertDialogDescription>
-            Ela excluirá permanentemente o seu produto "{name}"
+            Ela excluirá permanentemente sua matéria prima "{name}"
           </AlertDialogDescription>
         </AlertDialogHeader>
 
@@ -76,10 +78,10 @@ export function DeleteProductAlertDialog({
 
           <AlertDialogAction
             variant="destructive"
-            disabled={isDeletingProduct}
+            disabled={isDeletingRawMaterial}
             onClick={handleDeleteProduct}
           >
-            {isDeletingProduct ? (
+            {isDeletingRawMaterial ? (
               <span className="flex items-center gap-2">
                 <Spinner /> Excluindo
               </span>
