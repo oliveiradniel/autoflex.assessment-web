@@ -1,4 +1,4 @@
-export const unitTypeLabel = {
+export const unitTypeShortLabel = {
   KG: 'KG',
   G: 'G',
   L: 'L',
