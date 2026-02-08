@@ -17,6 +17,11 @@ export const ProductCreateSchema = z.object({
   price: z.coerce
     .number({ error: 'O preço do produto deve ser um número.' })
     .positive({ error: 'O preço do produto deve ser maior que zero.' }),
+  isActive: z
+    .boolean({
+      error: 'O status do produto deve ser verdadeiro ou falso.',
+    })
+    .default(true),
   description: z
     .string()
     .max(500, 'A descrição do produto deve conter no máximo 500 caracteres.')

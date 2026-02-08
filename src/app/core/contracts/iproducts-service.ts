@@ -1,7 +1,7 @@
 import type { Product } from '@/entities/product';
 import type { ProductCreateData } from '@/schemas/product/product-create-schema';
 import type { ProductUpdateData } from '@/schemas/product/product-update-schema';
-import type { ProductSummary } from '@/types/ProductSummary';
+import type { ProductSummary } from '@/types/product-summary';
 
 export abstract class IProductsService {
   abstract list(): Promise<Product[]>;

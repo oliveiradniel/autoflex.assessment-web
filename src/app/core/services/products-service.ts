@@ -5,7 +5,7 @@ import type { ProductUpdateData } from '@/schemas/product/product-update-schema'
 
 import type { IHttpClient } from '../contracts/ihttp-client';
 import type { IProductsService } from '../contracts/iproducts-service';
-import type { ProductSummary } from '@/types/ProductSummary';
+import type { ProductSummary } from '@/types/product-summary';
 
 export class ProductsService implements IProductsService {
   private readonly httpClient: IHttpClient;
