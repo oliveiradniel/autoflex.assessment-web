@@ -1,9 +1,7 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute } from '@tanstack/react-router';
+
+import { RawMaterial } from '@/pages/raw-material';
 
 export const Route = createFileRoute('/materias-primas')({
-  component: RouteComponent,
-})
-
-function RouteComponent() {
-  return <div>Hello "/materias-primas"!</div>
-}
+  component: RawMaterial,
+});
