@@ -2,10 +2,12 @@ import { useMemo } from 'react';
 
 import { cn } from '@/lib/utils';
 
+import { EditIcon } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { DeleteProductAlertDialog } from './components/delete-product-alert-dialog';
+
 import type { ColumnDef } from '@tanstack/react-table';
 import type { Product } from '@/entities/product';
-import { EditIcon, Trash2Icon } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 
 export function useColumns(): ColumnDef<Product>[] {
   return useMemo<ColumnDef<Product>[]>(
@@ -78,16 +80,16 @@ export function useColumns(): ColumnDef<Product>[] {
       },
       {
         id: 'actions',
-        cell: () => {
+        cell: ({ row }) => {
+          const { id, name } = row.original;
+
           return (
             <div className="flex items-center gap-2">
-              <Button variant="ghost">
+              <Button variant="ghost" size="icon-xs">
                 <EditIcon className="size-4 text-blue-500" />
               </Button>
 
-              <Button variant="ghost" className="hover:bg-destructive/10">
-                <Trash2Icon className="text-destructive size-4" />
-              </Button>
+              <DeleteProductAlertDialog id={id} name={name} />
             </div>
           );
         },

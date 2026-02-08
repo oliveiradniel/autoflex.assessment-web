@@ -55,9 +55,9 @@ export function CreateProductSheet() {
     try {
       const createdProduct = await createProduct(data);
 
-      queryClient.setQueryData(['products'], (old: Product[]) => [
+      queryClient.setQueryData<Product[]>(['products'], (old) => [
         createdProduct,
-        ...old,
+        ...(old ?? []),
       ]);
 
       form.reset();
