@@ -4,6 +4,8 @@ import { cn } from '@/lib/utils';
 
 import type { ColumnDef } from '@tanstack/react-table';
 import type { Product } from '@/entities/product';
+import { EditIcon, Trash2Icon } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 export function useColumns(): ColumnDef<Product>[] {
   return useMemo<ColumnDef<Product>[]>(
@@ -73,6 +75,23 @@ export function useColumns(): ColumnDef<Product>[] {
           });
         },
         header: 'DATA DE CRIAÇÃO',
+      },
+      {
+        id: 'actions',
+        cell: () => {
+          return (
+            <div className="flex items-center gap-2">
+              <Button variant="ghost">
+                <EditIcon className="size-4 text-blue-500" />
+              </Button>
+
+              <Button variant="ghost" className="hover:bg-destructive/10">
+                <Trash2Icon className="text-destructive size-4" />
+              </Button>
+            </div>
+          );
+        },
+        header: 'AÇÕES',
       },
     ],
     [],
