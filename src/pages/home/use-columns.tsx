@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 
 import { cn } from '@/lib/utils';
+import { formatCurrency } from '@/utils/format-currency';
 
 import { DeleteProductAlertDialog } from './components/delete-product-alert-dialog';
 import { UpdateProductSheet } from './components/update-product-sheet';
@@ -34,12 +35,7 @@ export function useColumns(): ColumnDef<Product>[] {
       {
         id: 'price',
         accessorFn: ({ price }) => price,
-        cell: ({ row }) => {
-          return new Intl.NumberFormat('pt-BR', {
-            style: 'currency',
-            currency: 'BRL',
-          }).format(row.original.price);
-        },
+        cell: ({ row }) => formatCurrency(row.original.price),
         header: 'PREÇO',
       },
       {
