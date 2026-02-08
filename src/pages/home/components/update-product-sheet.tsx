@@ -1,5 +1,7 @@
-import { useListRawMaterialsQuery } from '@/hooks/queries/use-list-raw-materials-query';
+import { useQueryClient } from '@tanstack/react-query';
 import { useForm, type Resolver } from 'react-hook-form';
+import { useListRawMaterialsQuery } from '@/hooks/queries/use-list-raw-materials-query';
+import { useUpdateProductMutation } from '@/hooks/mutations/use-update-product-mutation';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
@@ -15,16 +17,18 @@ import { Spinner } from '@/components/ui/spinner';
 import { SheetLayout } from '@/components/sheet-layout';
 import { ProductForm } from './product-form';
 
+import type { Product } from '@/entities/product';
 import type { ProductFormData } from '@/types/product-form-data';
 
 interface UpdateProductSheetProps {
-  product: ProductUpdateData;
+  product: Product;
 }
 
 export function UpdateProductSheet({ product }: UpdateProductSheetProps) {
-  const { rawMaterialList } = useListRawMaterialsQuery();
+  const queryClient = useQueryClient();
 
-  const isUpdatingProduct = false;
+  const { rawMaterialList } = useListRawMaterialsQuery();
+  const { updateProduct, isUpdatingProduct } = useUpdateProductMutation();
 
   const form = useForm<ProductFormData>({
     resolver: zodResolver(ProductUpdateSchema) as Resolver<ProductFormData>,
@@ -32,7 +36,13 @@ export function UpdateProductSheet({ product }: UpdateProductSheetProps) {
   });
 
   const handleSubmit = form.handleSubmit(async (data: ProductUpdateData) => {
-    console.log(data);
+    const updatedProduct = await updateProduct({ id: product.id, data });
+
+    queryClient.setQueryData<Product[]>(['products'], (old) => {
+      if (!old) return [];
+
+      return old?.map((p) => (p.id === product.id ? updatedProduct : p));
+    });
   });
 
   const isValidForm = form.formState.errors;
@@ -50,8 +60,8 @@ export function UpdateProductSheet({ product }: UpdateProductSheetProps) {
         <>
           <Button
             type="submit"
-            form="create-product-form"
-            disabled={!isValidForm}
+            form="update-product-form"
+            disabled={!isValidForm || isUpdatingProduct}
           >
             {isUpdatingProduct ? (
               <span className="flex items-center gap-2">
