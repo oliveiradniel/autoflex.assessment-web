@@ -2,17 +2,15 @@ import { useMutation } from '@tanstack/react-query';
 
 import { makeProductsService } from '@/app/core/factories/make-products-service';
 
-import type { ProductCreateData } from '@/schemas/product/product-create-schema';
-
-export function useCreateProductMutation() {
+export function useDeleteProductMutation() {
   const productsService = makeProductsService();
 
   const { mutateAsync, isPending } = useMutation({
-    mutationFn: (data: ProductCreateData) => productsService.create(data),
+    mutationFn: (id: string) => productsService.delete(id),
   });
 
   return {
-    createProduct: mutateAsync,
-    isCreatingProduct: isPending,
+    deleteProduct: mutateAsync,
+    isDeletingProduct: isPending,
   };
 }
