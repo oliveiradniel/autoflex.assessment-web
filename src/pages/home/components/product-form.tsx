@@ -2,6 +2,8 @@ import { Controller, useWatch, type UseFormReturn } from 'react-hook-form';
 
 import { cn } from '@/lib/utils';
 import { unitTypeLabel } from '../uniTypeLabel';
+import { formatCurrency } from '@/utils/format-currency';
+import { parseCurrency } from '@/utils/parse-currency';
 
 import { FormGroup } from '@/components/form-group';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -74,16 +76,28 @@ export function ProductForm({
         <Label htmlFor="price">Preço</Label>
 
         <InputGroup>
-          <InputGroupAddon>
-            <InputGroupText>R$</InputGroupText>
-          </InputGroupAddon>
+          <Controller
+            control={form.control}
+            name="price"
+            render={({ field: { value, onChange } }) => (
+              <InputGroupInput
+                type="text"
+                inputMode="numeric"
+                disabled={isSubmitting}
+                placeholder="0,00"
+                value={formatCurrency(value ?? 0)}
+                onChange={(event) => {
+                  const parsed = parseCurrency(event.target.value);
 
-          <InputGroupInput
-            type="number"
-            disabled={isSubmitting}
-            placeholder="0,00"
-            {...form.register('price')}
+                  onChange(parsed);
+                }}
+              />
+            )}
           />
+
+          <InputGroupAddon align="inline-end">
+            <InputGroupText>BRL</InputGroupText>
+          </InputGroupAddon>
         </InputGroup>
       </FormGroup>
 
