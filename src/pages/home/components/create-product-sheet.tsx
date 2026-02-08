@@ -1,7 +1,16 @@
-import { Controller, useForm, type Resolver } from 'react-hook-form';
+import { useState } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
+import { useCreateProductMutation } from '@/hooks/mutations/use-create-product-mutation';
 import { useListRawMaterialsQuery } from '@/hooks/queries/use-list-raw-materials-query';
+import { Controller, useForm, type Resolver } from 'react-hook-form';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import {
+  ProductCreateSchema,
+  type ProductCreateData,
+} from '@/schemas/product/product-create-schema';
+
+import { AxiosError } from 'axios';
 
 import { FormGroup } from '@/components/form-group';
 import { Button } from '@/components/ui/button';
@@ -26,21 +35,40 @@ import {
   SheetTrigger,
 } from '@/components/ui/sheet';
 import { Checkbox } from '@/components/ui/checkbox';
+import { Spinner } from '@/components/ui/spinner';
 
-import {
-  ProductCreateSchema,
-  type ProductCreateData,
-} from '@/schemas/product/product-create-schema';
+import type { Product } from '@/entities/product';
 
 export function CreateProductSheet() {
+  const queryClient = useQueryClient();
+
   const { rawMaterialList } = useListRawMaterialsQuery();
+  const { createProduct, isCreatingProduct } = useCreateProductMutation();
+
+  const [isSheetOpen, setIsSheetOpen] = useState(false);
 
   const form = useForm<ProductCreateData>({
     resolver: zodResolver(ProductCreateSchema) as Resolver<ProductCreateData>,
   });
 
-  const handleSubmit = form.handleSubmit((data: ProductCreateData) => {
-    console.log(data);
+  const handleSubmit = form.handleSubmit(async (data: ProductCreateData) => {
+    try {
+      const createdProduct = await createProduct(data);
+
+      queryClient.setQueryData(['products'], (old: Product[]) => [
+        createdProduct,
+        ...old,
+      ]);
+
+      form.reset();
+      setIsSheetOpen(false);
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        const errorMessage = error.response?.data?.error;
+
+        console.log(errorMessage);
+      }
+    }
   });
 
   const description = form.watch('description') ?? '';
@@ -67,23 +95,23 @@ export function CreateProductSheet() {
     !materialErrorMessage;
 
   const unitTypeLabels = {
-    KG: 'kg',
-    G: 'grama',
-    L: 'litro',
-    ML: 'mililitro',
-    UNIT: 'unidade',
-    PACK: 'pacote',
-    BOX: 'caixa',
-    ROLL: 'rolo',
-    SHEET: 'papel',
-    M: 'metro',
-    CM: 'centímetro',
+    KG: 'KG',
+    G: 'G',
+    L: 'L',
+    ML: 'ML',
+    UNIT: 'U',
+    PACK: 'Pacote',
+    BOX: 'Caixa',
+    ROLL: 'Rolo',
+    SHEET: 'Papel',
+    M: 'M',
+    CM: 'CM',
   };
 
   return (
-    <Sheet>
+    <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
       <SheetTrigger asChild>
-        <Button>Adicionar Produto</Button>
+        <Button onClick={() => setIsSheetOpen(true)}>Adicionar Produto</Button>
       </SheetTrigger>
 
       <SheetContent>
@@ -105,6 +133,7 @@ export function CreateProductSheet() {
             <Input
               id="name"
               placeholder="Ex.: Copo Descartável 200ml"
+              disabled={isCreatingProduct}
               {...form.register('name')}
             />
           </FormGroup>
@@ -115,6 +144,7 @@ export function CreateProductSheet() {
             <Input
               id="code"
               placeholder="Ex.: P-011"
+              disabled={isCreatingProduct}
               {...form.register('code')}
             />
           </FormGroup>
@@ -131,6 +161,7 @@ export function CreateProductSheet() {
                 id="price"
                 type="number"
                 placeholder="0.00"
+                disabled={isCreatingProduct}
                 {...form.register('price')}
               />
 
@@ -148,6 +179,7 @@ export function CreateProductSheet() {
                 id="description"
                 maxLength={500}
                 placeholder="Descreva detalhes sobre o produto"
+                disabled={isCreatingProduct}
                 {...form.register('description')}
               />
 
@@ -208,24 +240,31 @@ export function CreateProductSheet() {
                         <li key={id} className="flex items-center gap-1">
                           <Checkbox
                             checked={!!material}
-                            label={`${name} - ${unitTypeLabels[unitType]} `}
+                            label={`${name}`}
+                            disabled={isCreatingProduct}
                             onCheckedChange={(checked) =>
                               toggleMaterial(id, Boolean(checked))
                             }
                           />
 
-                          <Input
-                            type="number"
-                            min={0.01}
-                            step={0.01}
-                            disabled={!material}
-                            value={material?.quantityNeeded ?? ''}
-                            placeholder="Quantidade necessária"
-                            onChange={(e) =>
-                              changeQuantity(id, Number(e.target.value))
-                            }
-                            className="w-40"
-                          />
+                          <InputGroup className="w-60">
+                            <InputGroupAddon>
+                              <InputGroupText>
+                                {unitTypeLabels[unitType]}
+                              </InputGroupText>
+
+                              <InputGroupInput
+                                type="number"
+                                min={0.01}
+                                step={0.01}
+                                disabled={!material || isCreatingProduct}
+                                value={material?.quantityNeeded ?? ''}
+                                onChange={(e) =>
+                                  changeQuantity(id, Number(e.target.value))
+                                }
+                              />
+                            </InputGroupAddon>
+                          </InputGroup>
                         </li>
                       );
                     })}
@@ -240,13 +279,21 @@ export function CreateProductSheet() {
           <Button
             type="submit"
             form="create-product-form"
-            disabled={!isValidForm}
+            disabled={!isValidForm || isCreatingProduct}
           >
-            Cadastrar
+            {isCreatingProduct ? (
+              <span className="flex items-center gap-2">
+                Cadastrando <Spinner />
+              </span>
+            ) : (
+              'Cadastrar'
+            )}
           </Button>
 
           <SheetClose asChild>
-            <Button variant="outline">Cancelar</Button>
+            <Button variant="outline" onClick={() => setIsSheetOpen(false)}>
+              {isCreatingProduct ? 'Fechar' : 'Cancelar'}
+            </Button>
           </SheetClose>
         </SheetFooter>
       </SheetContent>
