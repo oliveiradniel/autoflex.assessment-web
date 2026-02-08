@@ -62,6 +62,7 @@ export function ProductForm({
         <Input
           id="name"
           disabled={isSubmitting}
+          aria-invalid={!!errors.name?.message}
           placeholder="Ex.: Copo Descartável 200ml"
           {...form.register('name')}
         />
@@ -73,6 +74,7 @@ export function ProductForm({
         <Input
           id="code"
           disabled={isSubmitting}
+          aria-invalid={!!errors.code?.message}
           placeholder="Ex.: P-011"
           {...form.register('code')}
         />
@@ -90,6 +92,7 @@ export function ProductForm({
                 type="text"
                 inputMode="numeric"
                 disabled={isSubmitting}
+                aria-invalid={!!errors.price?.message}
                 placeholder="0,00"
                 value={formatCurrency(value ?? 0)}
                 onChange={(event) => {
@@ -138,6 +141,7 @@ export function ProductForm({
             id="description"
             maxLength={500}
             disabled={isSubmitting}
+            aria-invalid={!!errors.description?.message}
             placeholder="Descreva detalhes sobre o produto"
             {...form.register('description')}
           />
@@ -200,6 +204,7 @@ export function ProductForm({
                         <InputGroupInput
                           type="number"
                           disabled={!material || isSubmitting}
+                          aria-invalid={!!errors.materials?.message}
                           value={material?.quantityNeeded ?? ''}
                           onChange={(e) =>
                             changeQuantity(id, Number(e.target.value))

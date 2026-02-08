@@ -45,6 +45,7 @@ export function RawMaterialForm({
         <Input
           id="name"
           disabled={isSubmitting}
+          aria-invalid={!!errors.name?.message}
           placeholder="Ex.: Corante Vermelho"
           {...form.register('name')}
         />
@@ -56,6 +57,7 @@ export function RawMaterialForm({
         <Input
           id="code"
           disabled={isSubmitting}
+          aria-invalid={!!errors.code?.message}
           placeholder="Ex.: RM-004"
           {...form.register('code')}
         />
@@ -68,6 +70,7 @@ export function RawMaterialForm({
           id="stock-quantity"
           type="number"
           disabled={isSubmitting}
+          aria-invalid={!!errors.stockQuantity?.message}
           placeholder="0"
           {...form.register('stockQuantity')}
         />
