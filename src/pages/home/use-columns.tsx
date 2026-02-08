@@ -27,8 +27,15 @@ export function useColumns(): ColumnDef<Product>[] {
         accessorFn: ({ description }) => description,
         cell: ({ row }) => {
           const description = row.original.description;
+          const hasDescription = !!description;
 
-          return <div className="max-w-sm truncate text-sm">{description}</div>;
+          return (
+            <div className="max-w-sm truncate text-sm">
+              <span className={cn(!hasDescription && 'italic opacity-50')}>
+                {hasDescription ? description : 'Sem descrição'}
+              </span>
+            </div>
+          );
         },
         header: 'DESCRIÇÃO',
       },
