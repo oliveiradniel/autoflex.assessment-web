@@ -7,7 +7,7 @@ import {
   useReactTable,
 } from '@tanstack/react-table';
 
-import { InformationCards } from './components/InformationCards';
+import { InformationCards } from './components/information-cards';
 import {
   Table,
   TableBody,
@@ -17,6 +17,7 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { DataTableFallback } from '@/components/data-table-fallback';
+import { CreateProductSheet } from './components/create-product-sheet';
 
 export function Home() {
   const { productList, isFetchingProductList } = useListProductsQuery();
@@ -34,12 +35,16 @@ export function Home() {
       <header className="flex flex-col gap-8">
         <InformationCards />
 
-        <div>
-          <h1 className="text-base font-bold">Inventário de Produtos</h1>
+        <div className="flex items-end justify-between">
+          <div>
+            <h1 className="text-base font-bold">Inventário de Produtos</h1>
 
-          <p className="text-sm">
-            Gerencie seus itens de forma eficiente e organizada.
-          </p>
+            <p className="text-sm">
+              Gerencie seus itens de forma eficiente e organizada.
+            </p>
+          </div>
+
+          <CreateProductSheet />
         </div>
       </header>
 
