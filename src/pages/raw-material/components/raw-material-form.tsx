@@ -1,7 +1,7 @@
 import { Controller, type UseFormReturn } from 'react-hook-form';
 
 import { unitTypeFullLabel } from '../unit-type-full-label';
-import { unitTypeShortLabel } from '@/pages/home/unit-type-short-label';
+import { unitTypeShortLabel } from '@/pages/products/unit-type-short-label';
 
 import { FormGroup } from '@/components/form-group';
 import { Input } from '@/components/ui/input';

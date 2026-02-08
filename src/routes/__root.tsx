@@ -7,7 +7,7 @@ import {
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
 
 import logoSideBar from '@/assets/images/logo-sidebar.png';
-import { FactoryIcon, HomeIcon, PackageIcon } from 'lucide-react';
+import { FactoryIcon, PackageIcon, PackageOpenIcon } from 'lucide-react';
 
 import {
   Sidebar,
@@ -31,22 +31,19 @@ function RootComponent() {
 
   const items = [
     {
-      title: 'Início',
-      url: '/',
-      icon: HomeIcon,
-      hasAction: false,
-    },
-    {
       title: 'Produtos',
       url: '/produtos',
       icon: PackageIcon,
-      hasAction: true,
     },
     {
       title: 'Matérias Primas',
       url: '/materias-primas',
       icon: FactoryIcon,
-      hasAction: true,
+    },
+    {
+      title: 'Produção',
+      url: '/producao',
+      icon: PackageOpenIcon,
     },
   ];
 

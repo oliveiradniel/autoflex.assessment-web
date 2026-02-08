@@ -20,7 +20,7 @@ import { DataTableFallback } from '@/components/data-table-fallback';
 import { CreateProductSheet } from './components/create-product-sheet';
 import { Spinner } from '@/components/ui/spinner';
 
-export function Home() {
+export function Products() {
   const { productList, isFetchingProductList, isLoadingProductList } =
     useListProductsQuery();
 
