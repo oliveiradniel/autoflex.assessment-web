@@ -43,6 +43,8 @@ export function UpdateProductSheet({ product }: UpdateProductSheetProps) {
 
       return old?.map((p) => (p.id === product.id ? updatedProduct : p));
     });
+
+    queryClient.invalidateQueries({ queryKey: ['summary-product'] });
   });
 
   const isValidForm = form.formState.errors;

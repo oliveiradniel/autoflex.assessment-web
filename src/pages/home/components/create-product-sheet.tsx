@@ -39,6 +39,8 @@ export function CreateProductSheet() {
         ...(old ?? []),
       ]);
 
+      queryClient.invalidateQueries({ queryKey: ['summary-product'] });
+
       form.reset();
     } catch (error) {
       if (error instanceof AxiosError) {
