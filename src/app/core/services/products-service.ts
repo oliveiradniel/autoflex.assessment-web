@@ -49,8 +49,6 @@ export class ProductsService implements IProductsService {
   }
 
   delete(id: string): Promise<void> {
-    const deletedProduct = this.httpClient.delete(`/products/${id}`);
-
-    return deletedProduct;
+    return this.httpClient.delete(`/products/${id}`);
   }
 }
