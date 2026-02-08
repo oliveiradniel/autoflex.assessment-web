@@ -6,7 +6,7 @@ import {
   useReactTable,
 } from '@tanstack/react-table';
 
-import { DataTableFallback } from '@/components/data-table/data-table-fallback';
+import { DataTableFallback } from '@/components/data-table-fallback';
 import { CreateRawMaterialSheet } from './components/create-raw-material-sheet';
 import { Spinner } from '@/components/ui/spinner';
 import {

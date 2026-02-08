@@ -16,7 +16,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { DataTableFallback } from '@/components/data-table/data-table-fallback';
+import { DataTableFallback } from '@/components/data-table-fallback';
 import { CreateProductSheet } from './components/create-product-sheet';
 import { Spinner } from '@/components/ui/spinner';
 
