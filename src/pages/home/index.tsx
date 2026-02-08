@@ -16,11 +16,13 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { DataTableFallback } from '@/components/data-table-fallback';
+import { DataTableFallback } from '@/components/data-table/data-table-fallback';
 import { CreateProductSheet } from './components/create-product-sheet';
+import { Spinner } from '@/components/ui/spinner';
 
 export function Home() {
-  const { productList, isFetchingProductList } = useListProductsQuery();
+  const { productList, isFetchingProductList, isLoadingProductList } =
+    useListProductsQuery();
 
   const columns = useColumns();
 
@@ -38,7 +40,11 @@ export function Home() {
 
         <div className="flex flex-wrap items-end justify-between gap-2">
           <div>
-            <h1 className="text-base font-bold">Inventário de Produtos</h1>
+            <div className="flex gap-4">
+              <h1 className="text-base font-bold">Inventário de Produtos</h1>
+
+              {isFetchingProductList && <Spinner />}
+            </div>
 
             <p className="text-sm">
               Gerencie seus itens de forma eficiente e organizada.
@@ -50,13 +56,13 @@ export function Home() {
       </header>
 
       <div className="mt-6 overflow-x-auto">
-        {isFetchingProductList && (
+        {isLoadingProductList && (
           <DataTableFallback
             fallbackColumns={columns.map((col) => col.header?.toString() ?? '')}
           />
         )}
 
-        {!isFetchingProductList && (
+        {!isLoadingProductList && (
           <Table>
             <TableHeader>
               {table.getHeaderGroups().map((headerGroup) => (
