@@ -1,7 +1,7 @@
 import { Controller, useWatch, type UseFormReturn } from 'react-hook-form';
 
 import { cn } from '@/lib/utils';
-import { unitTypeLabel } from '../uniTypeLabel';
+import { unitTypeShortLabel } from '../unit-type-short-label';
 import { formatCurrency } from '@/utils/format-currency';
 import { parseCurrency } from '@/utils/parse-currency';
 
@@ -125,9 +125,11 @@ export function ProductForm({
       )}
 
       <FormGroup error={errors.description?.message as string}>
-        <Label>Descrição</Label>
+        <Label htmlFor="description">Descrição</Label>
+
         <InputGroup>
           <InputGroupTextarea
+            id="description"
             maxLength={500}
             disabled={isSubmitting}
             placeholder="Descreva detalhes sobre o produto"
@@ -187,7 +189,7 @@ export function ProductForm({
                     <InputGroup className="w-60">
                       <InputGroupAddon>
                         <InputGroupText>
-                          {unitTypeLabel[unitType]}
+                          {unitTypeShortLabel[unitType]}
                         </InputGroupText>
                         <InputGroupInput
                           type="number"
