@@ -35,7 +35,7 @@ export function Home() {
       <header className="flex flex-col gap-8">
         <InformationCards />
 
-        <div className="flex items-end justify-between">
+        <div className="flex flex-wrap items-end justify-between gap-2">
           <div>
             <h1 className="text-base font-bold">Inventário de Produtos</h1>
 

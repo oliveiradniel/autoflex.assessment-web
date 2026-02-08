@@ -10,7 +10,7 @@ export function Checkbox({
     <CheckboxItem {...props}>
       <CheckboxIndicator />
 
-      <span className="text-xs">{label}</span>
+      <span className="pl-4 text-end text-xs">{label}</span>
     </CheckboxItem>
   );
 }

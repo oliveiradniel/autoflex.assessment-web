@@ -8,7 +8,6 @@ export function useListProductsQuery() {
   const { data, isFetching } = useQuery({
     queryKey: ['products'],
     queryFn: async () => productsService.list(),
-    placeholderData: [],
   });
 
   return {
