@@ -51,7 +51,7 @@ export function CreateProductSheet() {
     }
   });
 
-  const isValidForm = form.formState.errors;
+  const isValidForm = Object.keys(form.formState.errors).length === 0;
 
   return (
     <SheetLayout

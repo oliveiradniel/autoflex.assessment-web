@@ -1,4 +1,9 @@
-import { Controller, useWatch, type UseFormReturn } from 'react-hook-form';
+import {
+  Controller,
+  useFormState,
+  useWatch,
+  type UseFormReturn,
+} from 'react-hook-form';
 
 import { cn } from '@/lib/utils';
 import { unitTypeShortLabel } from '../unit-type-short-label';
@@ -37,12 +42,13 @@ export function ProductForm({
   isSubmitting,
   mode,
 }: ProductFormProps) {
+  const { errors } = useFormState({ control: form.control });
+
   const description =
     useWatch({
       control: form.control,
       name: 'description',
     }) ?? '';
-  const errors = form.formState.errors;
 
   return (
     <form

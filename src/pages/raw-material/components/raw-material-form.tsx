@@ -1,4 +1,4 @@
-import { Controller, type UseFormReturn } from 'react-hook-form';
+import { Controller, useFormState, type UseFormReturn } from 'react-hook-form';
 
 import { unitTypeFullLabel } from '../unit-type-full-label';
 import { unitTypeShortLabel } from '@/pages/products/unit-type-short-label';
@@ -29,7 +29,7 @@ export function RawMaterialForm({
   isSubmitting,
   mode,
 }: ProductFormProps) {
-  const errors = form.formState.errors;
+  const { errors } = useFormState({ control: form.control });
 
   const unitTypeList = Object.values(UnitType);
 

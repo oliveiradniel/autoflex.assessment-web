@@ -29,6 +29,9 @@ export function CreateRawMaterialSheet() {
     resolver: zodResolver(
       RawMaterialCreateSchema,
     ) as Resolver<RawMaterialFormData>,
+    defaultValues: {
+      unitType: 'KG',
+    },
   });
 
   const handleSubmit = form.handleSubmit(
