@@ -28,6 +28,7 @@ export function Home() {
     data: productList,
     columns,
     getCoreRowModel: getCoreRowModel(),
+    getRowId: (row) => row.id,
   });
 
   return (
