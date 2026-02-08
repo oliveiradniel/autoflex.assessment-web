@@ -17,8 +17,8 @@ import { Spinner } from '@/components/ui/spinner';
 import { SheetLayout } from '@/components/sheet-layout';
 import { ProductForm } from './product-form';
 
-import type { Product } from '@/entities/product';
 import type { ProductFormData } from '@/types/product-form-data';
+import type { Product } from '@/entities/product';
 
 export function CreateProductSheet() {
   const queryClient = useQueryClient();
