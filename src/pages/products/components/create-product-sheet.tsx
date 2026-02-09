@@ -28,6 +28,8 @@ export function CreateProductSheet() {
 
   const form = useForm<ProductFormData>({
     resolver: zodResolver(ProductCreateSchema) as Resolver<ProductFormData>,
+    mode: 'onChange',
+    reValidateMode: 'onChange',
   });
 
   const handleSubmit = form.handleSubmit(async (data: ProductCreateData) => {
@@ -51,7 +53,7 @@ export function CreateProductSheet() {
     }
   });
 
-  const isValidForm = Object.keys(form.formState.errors).length === 0;
+  const isValidForm = form.formState.isValid;
 
   return (
     <SheetLayout

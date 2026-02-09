@@ -32,6 +32,8 @@ export function UpdateProductSheet({ product }: UpdateProductSheetProps) {
 
   const form = useForm<ProductFormData>({
     resolver: zodResolver(ProductUpdateSchema) as Resolver<ProductFormData>,
+    mode: 'onChange',
+    reValidateMode: 'onChange',
     defaultValues: product,
   });
 
@@ -47,7 +49,7 @@ export function UpdateProductSheet({ product }: UpdateProductSheetProps) {
     queryClient.invalidateQueries({ queryKey: ['summary-product'] });
   });
 
-  const isValidForm = Object.keys(form.formState.errors).length === 0;
+  const isValidForm = form.formState.isValid;
 
   return (
     <SheetLayout

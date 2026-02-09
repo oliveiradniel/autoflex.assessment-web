@@ -29,6 +29,8 @@ export function CreateRawMaterialSheet() {
     resolver: zodResolver(
       RawMaterialCreateSchema,
     ) as Resolver<RawMaterialFormData>,
+    mode: 'onChange',
+    reValidateMode: 'onChange',
     defaultValues: {
       unitType: 'KG',
     },
@@ -57,7 +59,7 @@ export function CreateRawMaterialSheet() {
     },
   );
 
-  const isValidForm = Object.keys(form.formState.errors).length === 0;
+  const isValidForm = form.formState.isValid;
 
   return (
     <SheetLayout

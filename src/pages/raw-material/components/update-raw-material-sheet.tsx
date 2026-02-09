@@ -35,6 +35,8 @@ export function UpdateRawMaterialSheet({
     resolver: zodResolver(
       RawMaterialUpdateSchema,
     ) as Resolver<RawMaterialFormData>,
+    mode: 'onChange',
+    reValidateMode: 'onChange',
     defaultValues: rawMaterial,
   });
 
@@ -57,7 +59,7 @@ export function UpdateRawMaterialSheet({
     },
   );
 
-  const isValidForm = Object.keys(form.formState.errors).length === 0;
+  const isValidForm = form.formState.isValid;
 
   return (
     <SheetLayout
