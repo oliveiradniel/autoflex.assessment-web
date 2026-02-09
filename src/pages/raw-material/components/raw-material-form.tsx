@@ -69,6 +69,8 @@ export function RawMaterialForm({
         <Input
           id="stock-quantity"
           type="number"
+          step="0.01"
+          min="0"
           disabled={isSubmitting}
           aria-invalid={!!errors.stockQuantity?.message}
           placeholder="0"

@@ -203,6 +203,8 @@ export function ProductForm({
                         </InputGroupText>
                         <InputGroupInput
                           type="number"
+                          step="0.01"
+                          min="0"
                           disabled={!material || isSubmitting}
                           aria-invalid={!!errors.materials?.message}
                           value={material?.quantityNeeded ?? ''}
