@@ -41,8 +41,8 @@ function RootComponent() {
       icon: FactoryIcon,
     },
     {
-      title: 'Produção',
-      url: '/producao',
+      title: 'Relatório de Produção',
+      url: '/relatorio-de-producao',
       icon: PackageOpenIcon,
     },
   ];

@@ -9,18 +9,18 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as RelatorioDeProducaoRouteImport } from './routes/relatorio-de-producao'
 import { Route as ProdutosRouteImport } from './routes/produtos'
-import { Route as ProducaoRouteImport } from './routes/producao'
 import { Route as MateriasPrimasRouteImport } from './routes/materias-primas'
 
+const RelatorioDeProducaoRoute = RelatorioDeProducaoRouteImport.update({
+  id: '/relatorio-de-producao',
+  path: '/relatorio-de-producao',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProdutosRoute = ProdutosRouteImport.update({
   id: '/produtos',
   path: '/produtos',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ProducaoRoute = ProducaoRouteImport.update({
-  id: '/producao',
-  path: '/producao',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MateriasPrimasRoute = MateriasPrimasRouteImport.update({
@@ -31,48 +31,48 @@ const MateriasPrimasRoute = MateriasPrimasRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/materias-primas': typeof MateriasPrimasRoute
-  '/producao': typeof ProducaoRoute
   '/produtos': typeof ProdutosRoute
+  '/relatorio-de-producao': typeof RelatorioDeProducaoRoute
 }
 export interface FileRoutesByTo {
   '/materias-primas': typeof MateriasPrimasRoute
-  '/producao': typeof ProducaoRoute
   '/produtos': typeof ProdutosRoute
+  '/relatorio-de-producao': typeof RelatorioDeProducaoRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/materias-primas': typeof MateriasPrimasRoute
-  '/producao': typeof ProducaoRoute
   '/produtos': typeof ProdutosRoute
+  '/relatorio-de-producao': typeof RelatorioDeProducaoRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/materias-primas' | '/producao' | '/produtos'
+  fullPaths: '/materias-primas' | '/produtos' | '/relatorio-de-producao'
   fileRoutesByTo: FileRoutesByTo
-  to: '/materias-primas' | '/producao' | '/produtos'
-  id: '__root__' | '/materias-primas' | '/producao' | '/produtos'
+  to: '/materias-primas' | '/produtos' | '/relatorio-de-producao'
+  id: '__root__' | '/materias-primas' | '/produtos' | '/relatorio-de-producao'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   MateriasPrimasRoute: typeof MateriasPrimasRoute
-  ProducaoRoute: typeof ProducaoRoute
   ProdutosRoute: typeof ProdutosRoute
+  RelatorioDeProducaoRoute: typeof RelatorioDeProducaoRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/relatorio-de-producao': {
+      id: '/relatorio-de-producao'
+      path: '/relatorio-de-producao'
+      fullPath: '/relatorio-de-producao'
+      preLoaderRoute: typeof RelatorioDeProducaoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/produtos': {
       id: '/produtos'
       path: '/produtos'
       fullPath: '/produtos'
       preLoaderRoute: typeof ProdutosRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/producao': {
-      id: '/producao'
-      path: '/producao'
-      fullPath: '/producao'
-      preLoaderRoute: typeof ProducaoRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/materias-primas': {
@@ -87,8 +87,8 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   MateriasPrimasRoute: MateriasPrimasRoute,
-  ProducaoRoute: ProducaoRoute,
   ProdutosRoute: ProdutosRoute,
+  RelatorioDeProducaoRoute: RelatorioDeProducaoRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
