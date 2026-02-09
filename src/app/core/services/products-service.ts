@@ -6,6 +6,7 @@ import type { ProductUpdateData } from '@/schemas/product/product-update-schema'
 import type { IHttpClient } from '../contracts/ihttp-client';
 import type { IProductsService } from '../contracts/iproducts-service';
 import type { ProductSummary } from '@/types/product-summary';
+import type { ProductionReport } from '@/types/production-report';
 
 export class ProductsService implements IProductsService {
   private readonly httpClient: IHttpClient;
@@ -31,6 +32,14 @@ export class ProductsService implements IProductsService {
       this.httpClient.get<ProductSummary>(`/products/summary`);
 
     return productSummary;
+  }
+
+  calculateProduction(): Promise<ProductionReport[]> {
+    const productionReport = this.httpClient.get<ProductionReport[]>(
+      '/products/calculate-production',
+    );
+
+    return productionReport;
   }
 
   create(product: ProductCreateData): Promise<Product> {
