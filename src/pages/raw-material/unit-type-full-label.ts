@@ -7,7 +7,7 @@ export const unitTypeFullLabel = {
   PACK: 'Pacote',
   BOX: 'Caixa',
   ROLL: 'Rolo',
-  SHEET: 'Papel',
+  SHEET: 'Chapa',
   M: 'Metro',
   CM: 'Centímetro',
 };

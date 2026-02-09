@@ -7,7 +7,7 @@ export const unitTypeShortLabel = {
   PACK: 'Pacote',
   BOX: 'Caixa',
   ROLL: 'Rolo',
-  SHEET: 'Papel',
+  SHEET: 'Chapa',
   M: 'M',
   CM: 'CM',
 };
