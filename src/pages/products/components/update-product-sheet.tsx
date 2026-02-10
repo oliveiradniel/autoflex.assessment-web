@@ -47,6 +47,7 @@ export function UpdateProductSheet({ product }: UpdateProductSheetProps) {
     });
 
     queryClient.invalidateQueries({ queryKey: ['summary-product'] });
+    queryClient.invalidateQueries({ queryKey: ['production-report'] });
   });
 
   const isValidForm = form.formState.isValid;

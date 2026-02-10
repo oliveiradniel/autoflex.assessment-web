@@ -56,6 +56,7 @@ export function UpdateRawMaterialSheet({
       });
 
       queryClient.invalidateQueries({ queryKey: ['summary-product'] });
+      queryClient.invalidateQueries({ queryKey: ['production-report'] });
     },
   );
 

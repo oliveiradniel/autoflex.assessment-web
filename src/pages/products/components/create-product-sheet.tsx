@@ -42,6 +42,7 @@ export function CreateProductSheet() {
       ]);
 
       queryClient.invalidateQueries({ queryKey: ['summary-product'] });
+      queryClient.invalidateQueries({ queryKey: ['production-report'] });
 
       form.reset();
     } catch (error) {
