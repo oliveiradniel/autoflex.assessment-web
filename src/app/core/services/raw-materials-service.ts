@@ -25,6 +25,14 @@ export class RawMaterialsService implements IRawMaterialService {
     return rawMaterial;
   }
 
+  inUse(): Promise<string[]> {
+    const inUseRawMaterials = this.httpClient.get<string[]>(
+      '/raw-materials/in-use',
+    );
+
+    return inUseRawMaterials;
+  }
+
   create(rawMaterial: RawMaterialCreateData): Promise<RawMaterial> {
     const createdRawMaterial = this.httpClient.post<RawMaterial>(
       '/raw-materials',

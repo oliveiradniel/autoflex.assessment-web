@@ -8,6 +8,8 @@ export abstract class IRawMaterialService {
 
   abstract findById(id: string): Promise<RawMaterial>;
 
+  abstract inUse(): Promise<string[]>;
+
   abstract create(rawMaterial: RawMaterialCreateData): Promise<RawMaterial>;
 
   abstract partialUpdate(
