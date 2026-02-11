@@ -21,9 +21,11 @@ import {
   SidebarTrigger,
 } from '@/components/ui/sidebar';
 import { SidebarProvider } from '@/components/ui/sidebar/sidebar-provider';
+import { NotFound } from '@/pages/not-found';
 
 export const Route = createRootRoute({
   component: RootComponent,
+  notFoundComponent: NotFound,
 });
 
 function RootComponent() {
