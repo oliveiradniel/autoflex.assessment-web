@@ -62,6 +62,10 @@ export function RawMaterial() {
 
           <CreateRawMaterialSheet />
         </div>
+
+        <span className="text-destructive text-xs">
+          Não é possível excluir matérias primas que estejam em uso.
+        </span>
       </header>
 
       <div className="mt-6 overflow-x-auto">
