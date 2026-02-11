@@ -3,6 +3,7 @@ import { useListRawMaterialsQuery } from '@/hooks/queries/use-list-raw-materials
 import {
   flexRender,
   getCoreRowModel,
+  getFilteredRowModel,
   useReactTable,
 } from '@tanstack/react-table';
 
@@ -17,6 +18,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import { DataTableTextFilter } from '@/components/data-table-text-filter';
 
 export function RawMaterial() {
   const {
@@ -31,6 +33,7 @@ export function RawMaterial() {
     data: rawMaterialList,
     columns,
     getCoreRowModel: getCoreRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
     getRowId: (row) => row.id,
   });
 
@@ -50,7 +53,15 @@ export function RawMaterial() {
           </p>
         </div>
 
-        <CreateRawMaterialSheet />
+        <div className="flex w-full flex-wrap gap-1">
+          <DataTableTextFilter
+            table={table}
+            column="name"
+            placeholder="Procurar pelo nome da matéria prima"
+          />
+
+          <CreateRawMaterialSheet />
+        </div>
       </header>
 
       <div className="mt-6 overflow-x-auto">

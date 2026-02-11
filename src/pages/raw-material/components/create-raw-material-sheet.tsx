@@ -83,7 +83,7 @@ export function CreateRawMaterialSheet() {
 
   return (
     <SheetLayout
-      trigger={<Button>Adicionar Matéria Prisma</Button>}
+      trigger={<Button>Adicionar Matéria Prima</Button>}
       title="Cadastrar nova matéria prima"
       description="Preencha as informações abaixo para adicionar um novo insumo ao estoque e mantê-lo disponível para utilização na produção."
       footer={

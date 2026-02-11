@@ -4,6 +4,7 @@ import { useListProductsQuery } from '@/hooks/queries/use-list-products-query';
 import {
   flexRender,
   getCoreRowModel,
+  getFilteredRowModel,
   useReactTable,
 } from '@tanstack/react-table';
 
@@ -19,6 +20,7 @@ import {
 import { DataTableFallback } from '@/components/data-table-fallback';
 import { CreateProductSheet } from './components/create-product-sheet';
 import { Spinner } from '@/components/ui/spinner';
+import { DataTableTextFilter } from '@/components/data-table-text-filter';
 
 export function Products() {
   const { productList, isFetchingProductList, isLoadingProductList } =
@@ -30,6 +32,7 @@ export function Products() {
     data: productList,
     columns,
     getCoreRowModel: getCoreRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
     getRowId: (row) => row.id,
   });
 
@@ -51,7 +54,15 @@ export function Products() {
             </p>
           </div>
 
-          <CreateProductSheet />
+          <div className="flex w-full flex-wrap gap-1">
+            <DataTableTextFilter
+              table={table}
+              column="name"
+              placeholder="Procurar pelo nome do produto"
+            />
+
+            <CreateProductSheet />
+          </div>
         </div>
       </header>
 
