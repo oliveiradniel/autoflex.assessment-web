@@ -26,6 +26,7 @@ import { Switch } from '@/components/ui/switch';
 
 import type { RawMaterial } from '@/entities/raw-material';
 import type { ProductFormData } from '@/types/product-form-data';
+import { truncateString } from '@/utils/truncate-string';
 
 interface ProductFormProps {
   form: UseFormReturn<ProductFormData>;
@@ -189,8 +190,9 @@ export function ProductForm({
                 return (
                   <li key={id} className="flex items-center gap-2">
                     <Checkbox
+                      title={name}
                       checked={!!material}
-                      label={`${name}`}
+                      label={`${truncateString(name, 14)}`}
                       onCheckedChange={(checked) =>
                         toggleMaterial(id, Boolean(checked))
                       }

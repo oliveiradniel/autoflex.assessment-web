@@ -8,6 +8,7 @@ import { UpdateProductSheet } from './components/update-product-sheet';
 
 import type { ColumnDef } from '@tanstack/react-table';
 import type { Product } from '@/entities/product';
+import { truncateString } from '@/utils/truncate-string';
 
 export function useColumns(): ColumnDef<Product>[] {
   return useMemo<ColumnDef<Product>[]>(
@@ -16,6 +17,11 @@ export function useColumns(): ColumnDef<Product>[] {
         id: 'name',
         accessorFn: ({ name }) => name,
         header: 'PRODUTO',
+        cell: ({ row }) => (
+          <span title={row.original.name}>
+            {truncateString(row.original.name, 30)}
+          </span>
+        ),
       },
       {
         id: 'code',
@@ -30,7 +36,10 @@ export function useColumns(): ColumnDef<Product>[] {
           const hasDescription = !!description;
 
           return (
-            <div className="max-w-sm truncate text-sm">
+            <div
+              title={row.original.description}
+              className="max-w-sm truncate text-sm"
+            >
               <span className={cn(!hasDescription && 'italic opacity-50')}>
                 {hasDescription ? description : 'Sem descrição'}
               </span>

@@ -7,6 +7,7 @@ import { DeleteRawMaterialAlertDialog } from './components/delete-raw-material-a
 
 import type { ColumnDef } from '@tanstack/react-table';
 import type { RawMaterial } from '@/entities/raw-material';
+import { truncateString } from '@/utils/truncate-string';
 
 export function useColumns(): ColumnDef<RawMaterial>[] {
   return useMemo<ColumnDef<RawMaterial>[]>(
@@ -14,6 +15,11 @@ export function useColumns(): ColumnDef<RawMaterial>[] {
       {
         id: 'name',
         accessorFn: ({ name }) => name,
+        cell: ({ row }) => (
+          <span title={row.original.name}>
+            {truncateString(row.original.name, 30)}
+          </span>
+        ),
         header: 'PRODUTO',
       },
       {
