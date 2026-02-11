@@ -4,7 +4,7 @@ import { useForm, type Resolver } from 'react-hook-form';
 
 import { AxiosError } from 'axios';
 
-import { toast } from '@/components/toast';
+import { toast } from '@/components/toast/toast';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
@@ -62,6 +62,11 @@ export function UpdateRawMaterialSheet({
 
         queryClient.invalidateQueries({ queryKey: ['summary-product'] });
         queryClient.invalidateQueries({ queryKey: ['production-report'] });
+
+        toast({
+          type: 'success',
+          description: `A matéria prima "${form.getValues().name}" foi atualizada com sucesso.`,
+        });
       } catch (error) {
         if (error instanceof AxiosError) {
           const errorMessage = error.response?.data?.error;

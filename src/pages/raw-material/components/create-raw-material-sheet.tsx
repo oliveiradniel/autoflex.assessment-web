@@ -4,7 +4,7 @@ import { useQueryClient } from '@tanstack/react-query';
 
 import { AxiosError } from 'axios';
 
-import { toast } from '@/components/toast';
+import { toast } from '@/components/toast/toast';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
@@ -50,6 +50,11 @@ export function CreateRawMaterialSheet() {
 
         queryClient.invalidateQueries({ queryKey: ['summary-product'] });
         queryClient.invalidateQueries({ queryKey: ['production-report'] });
+
+        toast({
+          type: 'success',
+          description: `A matéria prima "${form.getValues().name}" foi criada com sucesso.`,
+        });
 
         form.reset();
       } catch (error) {

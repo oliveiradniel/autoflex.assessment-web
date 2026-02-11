@@ -5,7 +5,7 @@ import { useUpdateProductMutation } from '@/hooks/mutations/use-update-product-m
 
 import { AxiosError } from 'axios';
 
-import { toast } from '@/components/toast';
+import { toast } from '@/components/toast/toast';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
@@ -53,6 +53,11 @@ export function UpdateProductSheet({ product }: UpdateProductSheetProps) {
 
       queryClient.invalidateQueries({ queryKey: ['summary-product'] });
       queryClient.invalidateQueries({ queryKey: ['production-report'] });
+
+      toast({
+        type: 'success',
+        description: `O produto "${form.getValues().name}" foi atualizado com sucesso.`,
+      });
     } catch (error) {
       if (error instanceof AxiosError) {
         const errorMessage = error.response?.data?.error;

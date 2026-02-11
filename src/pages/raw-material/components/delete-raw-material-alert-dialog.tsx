@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { useDeleteRawMaterialMutation } from '@/hooks/mutations/use-delete-raw-material-mutation';
+import { useGetInUseRawMaterials } from '@/hooks/queries/use-get-in-use-raw-materials-query';
+
+import { toast } from '@/components/toast/toast';
 
 import { Trash2Icon } from 'lucide-react';
 
@@ -19,7 +22,6 @@ import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
 
 import type { RawMaterial } from '@/entities/raw-material';
-import { useGetInUseRawMaterials } from '@/hooks/queries/use-get-in-use-raw-materials-query';
 
 interface DeleteRawMaterialAlertDialog {
   id: string;
@@ -52,6 +54,11 @@ export function DeleteRawMaterialAlertDialog({
     queryClient.invalidateQueries({ queryKey: ['summary-product'] });
 
     setIsDeleteAlertDialogOpen(false);
+
+    toast({
+      type: 'info',
+      description: `A matéria prima "${name}" foi excluída.`,
+    });
   }
 
   return (

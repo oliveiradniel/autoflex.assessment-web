@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { useDeleteProductMutation } from '@/hooks/mutations/use-delete-product-mutation';
 
+import { toast } from '@/components/toast/toast';
+
 import { Trash2Icon } from 'lucide-react';
 
 import {
@@ -17,6 +19,7 @@ import {
 } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
+
 import type { Product } from '@/entities/product';
 
 interface DeleteProductAlertDialog {
@@ -45,6 +48,11 @@ export function DeleteProductAlertDialog({
     queryClient.invalidateQueries({ queryKey: ['summary-product'] });
 
     setIsDeleteAlertDialogOpen(false);
+
+    toast({
+      type: 'info',
+      description: `O produto "${name}" foi excluído.`,
+    });
   }
 
   return (

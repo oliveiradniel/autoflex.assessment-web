@@ -41,7 +41,7 @@ export function Toast({ id, type, description }: ToastProps) {
         )}
       />
 
-      <div className="flex flex-col items-start justify-center">
+      <div className="flex flex-col items-start">
         <span className="text-sm font-medium">
           {type === 'error'
             ? 'Erro'
@@ -50,14 +50,8 @@ export function Toast({ id, type, description }: ToastProps) {
               : 'Informação'}
         </span>
 
-        <span className="text-sm opacity-70">{description}</span>
+        <span className="text-start text-sm opacity-70">{description}</span>
       </div>
     </button>
   );
-}
-
-export function toast({ type, description }: Omit<ToastProps, 'id'>) {
-  return sonnerToast.custom((id) => (
-    <Toast id={id} type={type} description={description} />
-  ));
 }
