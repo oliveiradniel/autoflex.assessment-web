@@ -84,8 +84,13 @@ export function UpdateProductSheet({ product }: UpdateProductSheetProps) {
   return (
     <SheetLayout
       trigger={
-        <Button variant="ghost" size="icon-xs">
-          <EditIcon className="size-4 text-blue-500" />
+        <Button
+          aria-label="Editar produto"
+          title="Editar produto"
+          variant="ghost"
+          size="icon-xs"
+        >
+          <EditIcon aria-hidden="true" className="size-4 text-blue-500" />
         </Button>
       }
       title="Atualizar produto"

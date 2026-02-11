@@ -94,8 +94,13 @@ export function UpdateRawMaterialSheet({
   return (
     <SheetLayout
       trigger={
-        <Button variant="ghost" size="icon-xs">
-          <EditIcon className="size-4 text-blue-500" />
+        <Button
+          aria-label="Editar matéria prima"
+          title="Editar matéria prima"
+          variant="ghost"
+          size="icon-xs"
+        >
+          <EditIcon aria-hidden="true" className="size-4 text-blue-500" />
         </Button>
       }
       title="Atualizar matéria-prima"

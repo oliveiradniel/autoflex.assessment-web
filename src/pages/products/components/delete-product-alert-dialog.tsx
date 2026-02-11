@@ -54,11 +54,13 @@ export function DeleteProductAlertDialog({
     >
       <AlertDialogTrigger asChild>
         <Button
+          aria-label="Excluir produto"
+          title="Excluir produto"
           variant="ghost"
           size="icon-xs"
           className="hover:bg-destructive/10"
         >
-          <Trash2Icon className="text-destructive size-4" />
+          <Trash2Icon aria-hidden="true" className="text-destructive size-4" />
         </Button>
       </AlertDialogTrigger>
 

@@ -19,6 +19,7 @@ import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
 
 import type { RawMaterial } from '@/entities/raw-material';
+import { useGetInUseRawMaterials } from '@/hooks/queries/use-get-in-use-raw-materials-query';
 
 interface DeleteRawMaterialAlertDialog {
   id: string;
@@ -33,6 +34,10 @@ export function DeleteRawMaterialAlertDialog({
 
   const { deleteRawMaterial, isDeletingRawMaterial } =
     useDeleteRawMaterialMutation();
+  const { inUseRawMaterials, isFetchingInUseRawMaterials } =
+    useGetInUseRawMaterials();
+
+  const isRawMaterialInUse = inUseRawMaterials.includes(id);
 
   const [isDeleteAlertDialogOpen, setIsDeleteAlertDialogOpen] = useState(false);
 
@@ -56,11 +61,22 @@ export function DeleteRawMaterialAlertDialog({
     >
       <AlertDialogTrigger asChild>
         <Button
+          aria-label={
+            isRawMaterialInUse
+              ? 'Não é possível excluir: material vinculado a um produto'
+              : 'Excluir matéria prima'
+          }
+          title={
+            isRawMaterialInUse
+              ? 'Não é possível excluir: material vinculado a um produto'
+              : 'Excluir matéria prima'
+          }
           variant="ghost"
+          disabled={isRawMaterialInUse || isFetchingInUseRawMaterials}
           size="icon-xs"
           className="hover:bg-destructive/10"
         >
-          <Trash2Icon className="text-destructive size-4" />
+          <Trash2Icon aria-hidden="true" className="text-destructive size-4" />
         </Button>
       </AlertDialogTrigger>
 
