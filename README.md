@@ -25,6 +25,8 @@ O que essa interface entrega:
 
 ```bash
 git clone https://github.com/oliveiradniel/autoflex.assessment-web.git
+
+cd autoflex.assessment-web
 ```
 
 2. Instale as dependências:
