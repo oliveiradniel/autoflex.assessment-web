@@ -4,6 +4,8 @@ import { useQueryClient } from '@tanstack/react-query';
 
 import { AxiosError } from 'axios';
 
+import { toast } from '@/components/toast';
+
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
   RawMaterialCreateSchema,
@@ -54,8 +56,25 @@ export function CreateRawMaterialSheet() {
         if (error instanceof AxiosError) {
           const errorMessage = error.response?.data?.error;
 
-          console.log(errorMessage);
+          if (errorMessage === 'This code already in use.') {
+            toast({
+              type: 'error',
+              description: `O código "${form.getValues().code}" já está em uso.`,
+            });
+          }
+
+          if (errorMessage === 'This name already in use.') {
+            toast({
+              type: 'error',
+              description: `O nome "${form.getValues().name}" já está em uso.`,
+            });
+          }
         }
+
+        toast({
+          type: 'error',
+          description: `Não foi possível adicionar a matéria prima "${form.getValues().name}". Tente novamente mais tarde.`,
+        });
       }
     },
   );

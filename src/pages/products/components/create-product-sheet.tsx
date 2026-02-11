@@ -3,13 +3,15 @@ import { useCreateProductMutation } from '@/hooks/mutations/use-create-product-m
 import { useListRawMaterialsQuery } from '@/hooks/queries/use-list-raw-materials-query';
 import { useForm, type Resolver } from 'react-hook-form';
 
+import { AxiosError } from 'axios';
+
+import { toast } from '@/components/toast';
+
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
   ProductCreateSchema,
   type ProductCreateData,
 } from '@/schemas/product/product-create-schema';
-
-import { AxiosError } from 'axios';
 
 import { Button } from '@/components/ui/button';
 import { SheetClose } from '@/components/ui/sheet';
@@ -49,8 +51,25 @@ export function CreateProductSheet() {
       if (error instanceof AxiosError) {
         const errorMessage = error.response?.data?.error;
 
-        console.log(errorMessage);
+        if (errorMessage === 'This code already in use.') {
+          return toast({
+            type: 'error',
+            description: `O código "${form.getValues().code}" já está em uso.`,
+          });
+        }
+
+        if (errorMessage === 'This name already in use.') {
+          return toast({
+            type: 'error',
+            description: `O nome "${form.getValues().name}" já está em uso.`,
+          });
+        }
       }
+
+      toast({
+        type: 'error',
+        description: `Não foi possível adicionar o produto "${form.getValues().name}". Tente novamente mais tarde.`,
+      });
     }
   });
 

@@ -2,6 +2,10 @@ import { useUpdateRawMaterialMutation } from '@/hooks/mutations/use-update-raw-m
 import { useQueryClient } from '@tanstack/react-query';
 import { useForm, type Resolver } from 'react-hook-form';
 
+import { AxiosError } from 'axios';
+
+import { toast } from '@/components/toast';
+
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
   RawMaterialUpdateSchema,
@@ -42,21 +46,46 @@ export function UpdateRawMaterialSheet({
 
   const handleSubmit = form.handleSubmit(
     async (data: RawMaterialUpdateData) => {
-      const updatedRawMaterial = await updateRawMaterial({
-        id: rawMaterial.id,
-        data,
-      });
+      try {
+        const updatedRawMaterial = await updateRawMaterial({
+          id: rawMaterial.id,
+          data,
+        });
 
-      queryClient.setQueryData<RawMaterial[]>(['raw-materials'], (old) => {
-        if (!old) return [];
+        queryClient.setQueryData<RawMaterial[]>(['raw-materials'], (old) => {
+          if (!old) return [];
 
-        return old?.map((rm) =>
-          rm.id === rawMaterial.id ? updatedRawMaterial : rm,
-        );
-      });
+          return old?.map((rm) =>
+            rm.id === rawMaterial.id ? updatedRawMaterial : rm,
+          );
+        });
 
-      queryClient.invalidateQueries({ queryKey: ['summary-product'] });
-      queryClient.invalidateQueries({ queryKey: ['production-report'] });
+        queryClient.invalidateQueries({ queryKey: ['summary-product'] });
+        queryClient.invalidateQueries({ queryKey: ['production-report'] });
+      } catch (error) {
+        if (error instanceof AxiosError) {
+          const errorMessage = error.response?.data?.error;
+
+          if (errorMessage === 'This code already in use.') {
+            toast({
+              type: 'error',
+              description: `O código "${form.getValues().code}" já está em uso.`,
+            });
+          }
+
+          if (errorMessage === 'This name already in use.') {
+            toast({
+              type: 'error',
+              description: `O nome "${form.getValues().name}" já está em uso.`,
+            });
+          }
+        }
+
+        toast({
+          type: 'error',
+          description: `Não foi possível atualizar a matéria prima "${form.getValues().name}". Tente novamente mais tarde.`,
+        });
+      }
     },
   );
 
