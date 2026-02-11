@@ -35,8 +35,16 @@ npm install
 
 3. Copie o arquivo de variáveis de ambiente:
 
+Linux/macOS
+
 ```bash
 cp .env.example .env
+```
+
+Windows (PowerShell)
+
+```bash
+copy .env.example .env
 ```
 
 4. Executando em modo de desenvolvimento:
