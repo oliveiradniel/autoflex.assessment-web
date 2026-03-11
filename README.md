@@ -1,8 +1,8 @@
-# 🏭 Autoflex – Plataforma de Controle de Produção Industrial
+# 🏭 ForgePlan – Plataforma de Controle de Produção Industrial
 
-![Autoflex - Tela de Produtos](https://raw.githubusercontent.com/oliveiradniel/autoflex.assessment-web/refs/heads/main/src/assets/screenshots/products.png)
+![ForgePlan - Tela de Produtos](https://raw.githubusercontent.com/oliveiradniel/forgeplan-web/refs/heads/main/src/assets/screenshots/products.png)
 
-> O Autoflex Web é a interface de gerenciamento industrial do sistema Autoflex, desenvolvida com o objetivo de proporcionar uma experiência fluida e intuitiva para o controle de estoque e planejamento de produção.
+> O ForgePlan Web é a interface de gerenciamento industrial do sistema ForgePlan, desenvolvida com o objetivo de proporcionar uma experiência fluida e intuitiva para o controle de estoque e planejamento de produção.
 
 O projeto foca fortemente na comunicação eficiente com APIs REST, gerenciamento de estados para formulários complexos e na visualização clara de dados estratégicos, como o cálculo de viabilidade produtiva processado pelo back-end.
 
@@ -24,9 +24,9 @@ O que essa interface entrega:
 1. Clone o repositório e acesse o diretório do projeto:
 
 ```bash
-git clone https://github.com/oliveiradniel/autoflex.assessment-web.git
+git clone https://github.com/oliveiradniel/forgeplan-web.git
 
-cd autoflex.assessment-web
+cd forgeplan-web
 ```
 
 2. Instale as dependências:
@@ -100,25 +100,25 @@ O projeto utiliza um arquivo `.env` com as seguintes variáveis:
 
 Controle centralizado do seu catálogo. Visualize o inventário total e utilize a busca em tempo real para localizar itens rapidamente. Interface completa para criação, edição e remoção de registros.
 
-![Autoflex - Tela de Produtos](https://raw.githubusercontent.com/oliveiradniel/autoflex.assessment-web/refs/heads/main/src/assets/screenshots/products.png)
+![ForgePlan - Tela de Produtos](https://raw.githubusercontent.com/oliveiradniel/forgeplan-web/refs/heads/main/src/assets/screenshots/products.png)
 
 ### Controle de Matérias-primas
 
 Gestão detalhada de insumos com foco em integridade. O sistema monitora o estoque disponível e possui validações que impedem a exclusão de materiais que já compõem a ficha técnica de produtos existentes.
 
-![Autoflex - Tela de Matérias-primas](https://raw.githubusercontent.com/oliveiradniel/autoflex.assessment-web/refs/heads/main/src/assets/screenshots/raw-materials.png)
+![ForgePlan - Tela de Matérias-primas](https://raw.githubusercontent.com/oliveiradniel/forgeplan-web/refs/heads/main/src/assets/screenshots/raw-materials.png)
 
 ### Relatório de produção (RF004)
 
 Exibe o cálculo inteligente de produção baseado no estoque atual. A tela prioriza itens de maior valor unitário e identifica o potencial máximo de fabricação, servindo como ferramenta estratégica para o planejamento industrial.
 
-![Autoflex - Tela de relatório de produção](https://raw.githubusercontent.com/oliveiradniel/autoflex.assessment-web/refs/heads/main/src/assets/screenshots/report.png)
+![ForgePlan - Tela de relatório de produção](https://raw.githubusercontent.com/oliveiradniel/forgeplan-web/refs/heads/main/src/assets/screenshots/report.png)
 
 ---
 
 ## 🛜 Conexão com a API
 
-Para conseguir utilizar a aplicação vá até o [repositório da API](https://github.com/oliveiradniel/autoflex.assessment-server) e siga os passos corretamente para colocá-la no ar e fazer uso da aplicação web.
+Para conseguir utilizar a aplicação vá até o [repositório da API](https://github.com/oliveiradniel/forgeplan-server) e siga os passos corretamente para colocá-la no ar e fazer uso da aplicação web.
 
 ## 🧑🏻‍💻 Veja mais projetos meus
 
